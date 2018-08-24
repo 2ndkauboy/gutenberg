@@ -12,7 +12,7 @@ import { withDraggable } from '@wordpress/components';
 class BlockDraggable extends Component {
 	render() {
 		const { clientId, elementId, index, initDragging, isDragging, layout, rootClientId } = this.props;
-		const className = classnames( 'components-draggable', 'editor-block-list__block-draggable', {
+		const className = classnames( 'editor-block-list__block-draggable', {
 			'is-visible': isDragging,
 		} );
 
