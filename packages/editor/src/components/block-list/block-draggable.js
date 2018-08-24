@@ -4,28 +4,35 @@
 import classnames from 'classnames';
 
 /**
- * WordPress dependencies
+ * WordPress Dependencies
  */
-import { Draggable } from '@wordpress/components';
+import { Component } from '@wordpress/element';
+import { withDraggable } from '@wordpress/components';
 
-function BlockDraggable( { rootClientId, index, clientId, layout, isDragging, ...props } ) {
-	const className = classnames( 'editor-block-list__block-draggable', {
-		'is-visible': isDragging,
-	} );
+class BlockDraggable extends Component {
+	render() {
+		const { clientId, elementId, index, initDragging, isDragging, layout, rootClientId } = this.props;
+		const className = classnames( 'components-draggable', 'editor-block-list__block-draggable', {
+			'is-visible': isDragging,
+		} );
 
-	const transferData = {
-		type: 'block',
-		fromIndex: index,
-		rootClientId,
-		clientId,
-		layout,
-	};
+		const transferData = {
+			type: 'block',
+			fromIndex: index,
+			rootClientId,
+			clientId,
+			layout,
+		};
 
-	return (
-		<Draggable className={ className } transferData={ transferData } { ...props }>
-			<div className="editor-block-list__block-draggable-inner"></div>
-		</Draggable>
-	);
+		return (
+			<div
+				className={ className }
+				onDragStart={ initDragging( elementId, transferData ) }
+				draggable
+			>
+				<div className="editor-block-list__block-draggable-inner"></div>
+			</div>
+		);
+	}
 }
-
-export default BlockDraggable;
+export default withDraggable( BlockDraggable );
